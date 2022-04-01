@@ -1,4 +1,4 @@
-package com.example.paginationbasicspl.data
+package com.example.paginationbasicspl
 
 import kotlinx.coroutines.delay
 
@@ -15,7 +15,7 @@ class Repository {
         delay(2000L)
         val startingIndex = page*pageSize
         // make sure to do proper error handling in production use
-        return if(startingIndex + pageSize < remoteDataSource.size){
+        return if(startingIndex + pageSize <= remoteDataSource.size){
             Result.success(
                 // slicing to simulate the next response
                 remoteDataSource.slice(startingIndex until startingIndex + pageSize)

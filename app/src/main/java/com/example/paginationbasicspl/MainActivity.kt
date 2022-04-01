@@ -1,6 +1,7 @@
 package com.example.paginationbasicspl
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -30,10 +31,12 @@ class MainActivity : ComponentActivity() {
                 ) {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(state.items.size) { index ->
+                            Log.d("HomeScreen", "item size is ${state.items.size} and index is $index")
                             val item = state.items[index]
 
                             // below if statement is a part of side effect
-                            if (index >= state.items.size - 1 && !state.endReached && !state.isLoading) {
+                            if (index >= state.items.size - 5 && !state.endReached && !state.isLoading) {
+                                Log.d("If tag", "entered if statement")
                                 viewModel.loadNextItems()
                             }
                             Column(
@@ -41,7 +44,7 @@ class MainActivity : ComponentActivity() {
                                     .fillMaxWidth()
                                     .padding(8.dp)
                             ) {
-                                Text(text = item.title, fontSize = 20.sp, color = Color.Black)
+                                Text(text = item.title, fontSize = 20.sp)
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text(item.description)
                             }
@@ -51,7 +54,7 @@ class MainActivity : ComponentActivity() {
                                 Row(modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(8.dp),
-                                horizontalArrangement = Arrangement.Center) {
+                                horizontalArrangement = Arrangement.Center){
                                     CircularProgressIndicator()
                                 }
                             }

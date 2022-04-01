@@ -1,5 +1,7 @@
 package com.example.paginationbasicspl.pagination
 
+import android.util.Log
+
 // key is the what kind of value we want to paginate
 class DefaultPaginator<Key, Item>(
     private val initialKey: Key,
@@ -10,20 +12,22 @@ class DefaultPaginator<Key, Item>(
     private inline val onSuccess: suspend (items: List<Item>, newKey: Key) -> Unit
 ) : Paginator<Key, Item>{
 
-    private var currentKey: Key = initialKey
+    private var currentKey = initialKey
     // this will be true as long as we make request to our data source (database/API)
     private var isMakingRequest = false
     override suspend fun loadNextItems() {
         if(isMakingRequest){
+            Log.d("defaultpaginator", "entered if statement")
             return
         }
         isMakingRequest = true
         onLoadUpdated(true)
         val result = onRequest(currentKey)
+        isMakingRequest = false
         val items = result.getOrElse { throwable->
             onError(throwable)
             onLoadUpdated(false) // we won't update if we get an error
-            return;
+            return
         }
         currentKey = getNextKey(items)
         onSuccess(items, currentKey)

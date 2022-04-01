@@ -5,8 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.paginationbasicspl.data.ListItem
-import com.example.paginationbasicspl.data.Repository
 import com.example.paginationbasicspl.pagination.DefaultPaginator
 import kotlinx.coroutines.launch
 
